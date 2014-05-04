@@ -1,0 +1,109 @@
+extends layout
+
+block head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    title FoundationExpress
+    link(rel='stylesheet', href='/javascripts/vendor/components-font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='/stylesheets/app.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='http://fonts.googleapis.com/css?family=Contrail+One')
+    script(src='/javascripts/vendor/modernizr/modernizr.js')
+block header
+  .row
+    .large-12.medium-12.columns.headerContents
+      .medium-2.small-2.columns.bigDisplay.mediumDisplay.smallDisplay
+        .headerHeader
+          h3 trimbl
+      .medium-10.small-10.columns.mediumDisplay.smallDisplay
+        .headerHeader.menuHeader
+          i.right.fa.fa-fix(ng-class='{"fa-chevron-down": isopen, "fa-chevron-right": !isopen}')
+          h3 menu
+
+block content
+  .row
+    .large-3.sideMenu.columns.bigDisplay.sideBox
+      .sideMenuContent
+        div(ng-controller='accordionController', ng-model='oneAtATime')
+          accordion(close-others='true')
+            accordion-group
+              accordion-heading
+                | ABOUT
+                //- i.right.fa.fa-fix(ng-class='{"fa-chevron-down": isopen, "fa-chevron-right": !isopen}')
+              | This is just some content to illustrate fancy headings.
+        .otherLinks
+          h6
+            a(href="https://github.com/jlmitch5/trimbl", target="_blank") SOURCE
+          h6 
+            a(href="https://twitter.com/trimbl_og", target="_blank") TWITTER
+          br
+      .sideNonProfHeader
+        h3 Non-profit of the Week
+      .sideNonProf
+    .large-9.medium-12.small-12.columns.postsBox.bigDisplay.mediumDisplay.smallDisplay
+      h3 TODO: Posts
+
+block footer
+  .row
+    .large-12.medium-12.columns.footerContents.mediumDisplay.smallDisplay
+      .large-8.medium-12.columns.partnerBlogs
+        .row
+          .large-3.medium-3.small-3.columns
+              img(src='/images/theBottomString.png')
+          .large-3.medium-3.small-3.columns
+              img(src='http://www.ianpoulter.com/wp-content/uploads/2012/07/circle-white.png')
+          .large-3.medium-3.small-3.columns
+              img(src='http://www.ianpoulter.com/wp-content/uploads/2012/07/circle-white.png')
+          .large-3.medium-3.small-3.columns
+              img(src='/images/triangleBeat.png')
+      .large-4.medium-12.columns
+        .row
+          .panel.footer-right
+            h5 woo!
+    .large-12.medium-12.columns.footerContents.bigDisplay
+      .large-8.medium-12.columns.partnerBlogs
+        .row
+          .large-3.medium-3.small-3.columns
+            .footer-img
+              img(src='/images/theBottomString.png')
+          .large-3.medium-3.small-3.columns
+            .footer-img
+              img(src='/images/theBottomString.png')
+          .large-3.medium-3.small-3.columns
+            .footer-img
+              img(src='/images/theBottomString.png')
+          .large-3.medium-3.small-3.columns
+            .footer-img
+              img(src='/images/triangleBeat.png')
+        .row.full-height
+          .large-3.medium-3.small-3.columns.full-height
+            .panel.footer-link
+              a(src='http://www.ianpoulter.com/wp-content/uploads/2012/07/circle-white.png') The Bottom String
+          .large-3.medium-3.small-3.columns.full-height
+            .panel.footer-link
+              a(src='http://www.ianpoulter.com/wp-content/uploads/2012/07/circle-white.png') citydaze
+          .large-3.medium-3.small-3.columns.full-height
+            .panel.footer-link
+              a(src='http://www.ianpoulter.com/wp-content/uploads/2012/07/circle-white.png') Fabricoh
+          .large-3.medium-3.small-3.columns.full-height
+            .panel.footer-link
+              a(src='http://www.ianpoulter.com/wp-content/uploads/2012/07/circle-white.png') Triangle Beat
+      .large-4.medium-12.columns
+        .row
+          .panel.footer-right
+            h5 trimbl was created in the Spring of 2014 by John Mitchell.  Special thanks to reddit.com/r/node, and all the partner blogs!
+    .large-12.medium-12.columns.footerHeader
+      .large-8.medium-12.columns.bigDisplay
+        .row
+          h3 partners
+      .large-4.columns.bigDisplay.mediumDisplay
+        .row
+          h3 about
+  script(src='/javascripts/vendor/angular/angular.min.js')
+  script(src='/javascripts/vendor/angular-foundation-bower/mm-foundation-tpls.min.js')
+  script(src='/javascripts/app.js')
+  script(src='/javascripts/angular-controller.js')
+  script(src='/javascripts/vendor/fastclick/lib/fastclick.js')
+  script(src='/javascripts/vendor/jquery/dist/jquery.min.js')
+  script(src='/javascripts/vendor/jquery.cookie/jquery.cookie.js')
+  script(src='/javascripts/vendor/foundation/js/foundation.min.js')
