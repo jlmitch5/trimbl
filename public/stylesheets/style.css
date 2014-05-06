@@ -33,6 +33,7 @@
 }
 
 .headerContents {
+	padding-top: .3rem;
 	max-width: 100%;
 	margin: 0;
 	background-color: #383838;
@@ -96,6 +97,19 @@
 	color: #ccc;
 }
 
+.menuHeader dd {
+	line-height: 1rem;
+}
+
+.phoneMenu dd>a {
+	padding: 0rem !important;
+}
+
+.phoneMenu dl {
+	line-height: 1rem;
+/*	height: 1rem;*/
+}
+
 .otherLinks h6 {
 	line-height: 3rem;
 	vertical-align: text-top;
@@ -135,6 +149,20 @@
 
 h3 {
 	font-family: "Contrail One", arial;
+}
+
+.bold {
+	font-weight: 700;
+}
+
+.aboutMenuPhone {
+	margin-left: calc(-20% - 4.5rem);
+	padding-left: 2rem;
+	background-color: #fff;
+	padding-right: 2rem;
+	padding-top: 1rem;
+	margin-right: -3.3rem;
+	margin-bottom: 2rem;
 }
 
 @media only screen and (min-width: 40.063rem) {

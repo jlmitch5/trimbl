@@ -15,10 +15,87 @@ block header
       .medium-2.small-2.columns.bigDisplay.mediumDisplay.smallDisplay
         .headerHeader
           h3 trimbl
-      .medium-10.small-10.columns.mediumDisplay.smallDisplay
-        .headerHeader.menuHeader
-          i.right.fa.fa-fix(ng-class='{"fa-chevron-down": isopen, "fa-chevron-right": !isopen}')
-          h3 menu
+      .medium-10.small-10.columns.mediumDisplay.smallDisplay.phoneMenu
+        div(ng-controller='accordionController', ng-model='oneAtATime')
+          accordion(close-others='true')
+            accordion-group
+              accordion-heading
+                .headerHeader.menuHeader
+                  i.right.fa.fa-fix(ng-class='{"fa-chevron-down": isopen, "fa-chevron-right": !isopen}')
+                  h3 about
+              | 
+              .aboutMenuPhone
+                span.bold Who are you?
+                br
+                | I'm a Computer Science undergrad at NC State fininishing up my final year, as well as a member of WKNC-FM (right now, I'm their live sound guy).  I'm the webmaster of the Caldwell Fellows and a Red Hat webdev intern.  I also play guitar in the slow/sad/psych band Less Western.
+                br
+                br
+                span.bold Why did you start trimbl?
+                br
+                | trimbl started as a class entrepreneurship project.  It exists for a few reasons, but mainly because I love local music, and I wanted to create a single place that you could go to to read various opinions about what is going on in the Triangle.
+                br
+                br
+                span.bold How do I get my blog on trimbl?
+                br
+                | First of all, thanks so much for your interest in becoming a part of this online space!  As of right now, I'm focusing on (among other things) developing how this site can best serve the four blogs that are currently being aggregated, from a technical standpoint, as well as part of the mission and vision I set out to accomplish with this site.
+                br
+                br
+                | That being said, please email trimbl dot og at gmail dot com with "add my blog" somewhere in the subject, so I can learn more about you and your blog.  In the next few months, I plan on adding new content sources, and knowing that you exist and are interested are two ways that you can be the next partner in the aggregate.
+                br
+                br
+                span.bold When will trimbl review my record?
+                br
+                | While trimbl contains many reviews of local artists such as yourself, none of the content was produced by me; I just aggregate it.  Your best bet is sending your stuff to one of our partner blogs that accepts solicited demos (The Bottom String, Triangle Beat, and City Daze).
+                br
+                br
+                span.bold I have a really cool idea or found a bug, how do I let that be known?
+                br
+                | If you want to be extremely helpful, report it in GitHub (this requires you to make an account).  If it's a bug tag it with "bug", and if it's a feature request tag it with "feature request".
+                br
+                br
+                | If creating another online account bums you out, or GitHub seems like an overly-technical, scary place (it's not, I promise), you can shoot me an email with "bug"/"feature request" somewhere in the subject line to trimbl dot og at gmail dot com.
+                br
+                br
+                | Note: the best way to follow the progress of the fix or addition is through GitHub, so the first way is highly recommended.
+                br
+                br
+                span.bold What else is trimbl besides a place to read 4 blogs' posts?
+                br
+                | trimbl is a very new thing, so not much, but there's a lot of cool things coming.  Follow us on twitter @trimbl_og to find out about a bunch of new stuff.
+                br
+                br
+                span.bold What's coming in the next iteration for trimbl?
+                br
+                | The ability to click through the next relevant post from the full view of each blog partner's website.  In other words, I'll have a bar at the top of the page similar to StumbleUpon to allow you to see and click through to new relevant posts, while allowing you to see the post in the actual blog it came from.
+                br
+                br
+                span.bold How do I get involved with developing the site?  What can I take from you?
+                br
+                | Shoot an email to trimbl dot og at gmail dot com with "developer" somewhere in the subject line, and a little bit about what you want to do, and I'll help you get to the point where you can do it.
+                br
+                br
+                br
+                | The source code is released under the MIT license, so feel free to fork and redistribute as you see fit, without my permission.
+                br
+                br
+                | Note that all branding and design (the logo and name, specifically) are not covered under the MIT license, so do not use them without permission.
+                br
+                br
+                span.bold At a high-level, how does trimbl work?
+                br
+                | All blogs send trimbl JSON data about new posts through the blogger api or a wordpress plugin twice a day (and updates to old posts are check every other day).  That JSON is then parsed and sent to a MongoDB schema, either updating an old document, or creating a new one.  When you search for an artist, the schema is queried and returns all relevant documents that contain your search term in either the title or content fields.  Then, I display those posts for you to read/click on.
+                br
+                br
+                span.bold How do I advertise on trimbl/will you put something about my non-profit in the non-profit space?
+                br
+                | I'm still trying to figure out how to best support ads, while maintaining a level of relevance and usefulness to the users of trimbl.  If you have an interesting idea on how you'd like to advertise, or just want to let me know that you are interesting in having an ad up once they are supported on trimbl, shoot me an email at trimbl dot og at gmail dot com.
+                br
+                br
+                | If your non-profit (or specific event, project, etc.) is relevant, sure!  Send an email with "non-profit" somewhere in the subject line to triml dot og at gmail dot com.
+                br
+                br
+                br
+
 
 block content
   .row
@@ -29,8 +106,75 @@ block content
             accordion-group
               accordion-heading
                 | ABOUT
-                //- i.right.fa.fa-fix(ng-class='{"fa-chevron-down": isopen, "fa-chevron-right": !isopen}')
-              | This is just some content to illustrate fancy headings.
+              | 
+              span.bold Who are you?
+              br
+              | I'm a Computer Science undergrad at NC State fininishing up my final year, as well as a member of WKNC-FM (right now, I'm their live sound guy).  I'm the webmaster of the Caldwell Fellows and a Red Hat webdev intern.  I also play guitar in the slow/sad/psych band Less Western.
+              br
+              br
+              span.bold Why did you start trimbl?
+              br
+              | trimbl started as a class entrepreneurship project.  It exists for a few reasons, but mainly because I love local music, and I wanted to create a single place that you could go to to read various opinions about what is going on in the Triangle.
+              br
+              br
+              span.bold How do I get my blog on trimbl?
+              br
+              | First of all, thanks so much for your interest in becoming a part of this online space!  As of right now, I'm focusing on (among other things) developing how this site can best serve the four blogs that are currently being aggregated, from a technical standpoint, as well as part of the mission and vision I set out to accomplish with this site.
+              br
+              br
+              | That being said, please email trimbl dot og at gmail dot com with "add my blog" somewhere in the subject, so I can learn more about you and your blog.  In the next few months, I plan on adding new content sources, and knowing that you exist and are interested are two ways that you can be the next partner in the aggregate.
+              br
+              br
+              span.bold When will trimbl review my record?
+              br
+              | While trimbl contains many reviews of local artists such as yourself, none of the content was produced by me; I just aggregate it.  Your best bet is sending your stuff to one of our partner blogs that accepts solicited demos (The Bottom String, Triangle Beat, and City Daze).
+              br
+              br
+              span.bold I have a really cool idea or found a bug, how do I let that be known?
+              br
+              | If you want to be extremely helpful, report it in GitHub (this requires you to make an account).  If it's a bug tag it with "bug", and if it's a feature request tag it with "feature request".
+              br
+              br
+              | If creating another online account bums you out, or GitHub seems like an overly-technical, scary place (it's not, I promise), you can shoot me an email with "bug"/"feature request" somewhere in the subject line to trimbl dot og at gmail dot com.
+              br
+              br
+              | Note: the best way to follow the progress of the fix or addition is through GitHub, so the first way is highly recommended.
+              br
+              br
+              span.bold What else is trimbl besides a place to read 4 blogs' posts?
+              br
+              | trimbl is a very new thing, so not much, but there's a lot of cool things coming.  Follow us on twitter @trimbl_og to find out about a bunch of new stuff.
+              br
+              br
+              span.bold What's coming in the next iteration for trimbl?
+              br
+              | The ability to click through the next relevant post from the full view of each blog partner's website.  In other words, I'll have a bar at the top of the page similar to StumbleUpon to allow you to see and click through to new relevant posts, while allowing you to see the post in the actual blog it came from.
+              br
+              br
+              span.bold How do I get involved with developing the site?  What can I take from you?
+              br
+              | Shoot an email to trimbl dot og at gmail dot com with "developer" somewhere in the subject line, and a little bit about what you want to do, and I'll help you get to the point where you can do it.
+              br
+              br
+              br
+              | The source code is released under the MIT license, so feel free to fork and redistribute as you see fit, without my permission.
+              br
+              br
+              | Note that all branding and design (the logo and name, specifically) are not covered under the MIT license, so do not use them without permission.
+              br
+              br
+              span.bold At a high-level, how does trimbl work?
+              br
+              | All blogs send trimbl JSON data about new posts through the blogger api or a wordpress plugin twice a day (and updates to old posts are check every other day).  That JSON is then parsed and sent to a MongoDB schema, either updating an old document, or creating a new one.  When you search for an artist, the schema is queried and returns all relevant documents that contain your search term in either the title or content fields.  Then, I display those posts for you to read/click on.
+              br
+              br
+              span.bold How do I advertise on trimbl/will you put something about my non-profit in the non-profit space?
+              br
+              | I'm still trying to figure out how to best support ads, while maintaining a level of relevance and usefulness to the users of trimbl.  If you have an interesting idea on how you'd like to advertise, or just want to let me know that you are interesting in having an ad up once they are supported on trimbl, shoot me an email at trimbl dot og at gmail dot com.
+              br
+              br
+              | If your non-profit (or specific event, project, etc.) is relevant, sure!  Send an email with "non-profit" somewhere in the subject line to triml dot og at gmail dot com.
+              br
         .otherLinks
           h6
             a(href="https://github.com/jlmitch5/trimbl", target="_blank") SOURCE
