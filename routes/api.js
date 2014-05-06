@@ -1,22 +1,79 @@
 //api.js
 var router = require('express').Router();
+var https = require('https');
+// var google = require('node-google-api')('AIzaSyBAKZ_8FeLGS8LKTAKwYGk2dtg1gQQs0Ws');
+var google = require('node-google-api')({
+    apiKey: 'AIzaSyCyS0DHikgScB7D7lwEcKzxAoSJE7a8GJc',
+    debugMode: true // Throws errors instead of passing them silently.
+});
 
 //you can use something like this: .../api/posts?searchQuery=goodBand+dateSelection=lastWeek
 router.get('/posts', function(req, res){
-    var searchQuery = req.query.searchQuery;
-    var dateSelection = req.query.dateSelection;
-    var responseQuery = 'TODO: get posts with'
-    if(searchQuery) {
-    	responseQuery += ' searchQuery: ' + searchQuery;
-    }
-    if(dateSelection) {
-    	responseQuery += ' dateSelection: ' + dateSelection;
-    }
-    if(!dateSelection && !searchQuery) {
-    	responseQuery = 'Get no posts!'
-    }
-    // do stuff
-    res.json({response: responseQuery});
+    google.build(function(api) {
+      api.calendar.events.list({
+        calendarid: 'en.usa#holiday@group.v.calendar.google.com'
+      }, function(result) {
+        if(result.error){
+          console.log(result.error);
+        } else {
+          for(var i in result.items) {
+            console.log(result.items[i].summary);
+          }
+        }
+      });
+    });
+    google.build(function(api) {
+        api.blogger.posts.list({
+            blogId: '6798191055822974877',
+            maxResults: '10'
+        }, function(result) {
+            if(result.error){
+              console.log(result.error);
+            } else {
+              for(var i in result.items) {
+                console.log(result.items[i].summary);
+              }
+            }
+        });
+    });
+    // var options = {
+    //   hostname: 'googleapis.com',
+    //   port: 443,
+    //   path: '/blogger/v3/blogs/3213900?key=AIzaSyBAKZ_8FeLGS8LKTAKwYGk2dtg1gQQs0Ws',
+    //   method: 'GET'
+    // };
+
+    // req = https.request(options, function(res) {
+    //   console.log("statusCode: ", res.statusCode);
+    //   console.log("headers: ", res.headers);
+
+    //   res.on('data', function(d) {
+    //     process.stdout.write(d);
+    //   });
+    // });
+    // req.end();
+
+    // var options = {
+    //   hostname: 'www.googleapis.com/blogger/v3/blogs/3213900?key=AIzaSyCyS0DHikgScB7D7lwEcKzxAoSJE7a8GJc',
+    //   method: 'GET'
+    // };
+    // var searchQuery = req.query.searchQuery;
+    // var dateSelection = req.query.dateSelection;
+    // var responseQuery = 'TODO: get posts with'
+    // if(searchQuery) {
+    // 	responseQuery += ' searchQuery: ' + searchQuery;
+    // }
+    // if(dateSelection) {
+    // 	responseQuery += ' dateSelection: ' + dateSelection;
+    // }
+    // if(!dateSelection && !searchQuery) {
+    //     https.request(options, function(resGoogle) {
+    //         res = resGoogle;
+    //     }
+    // 	// responseQuery = 'Get no posts!'
+    // }
+    // // do stuff
+    // res.json({response: responseQuery});
 });
 
 // router.get('/apiGetTheWeeksPosts', function(req, res) {

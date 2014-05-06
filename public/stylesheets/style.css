@@ -1,4 +1,4 @@
-.smallDisplay {
+ssmallDisplay {
 	display: block !important;
 }
 
@@ -124,7 +124,6 @@
 
 .postsBox {
 	background-color: #ccc;
-	height: 200rem;
 }
 
 .sideNonProfHeader {
@@ -142,9 +141,7 @@
 }
 
 .sideNonProf {
-	height: 20rem;
 	border: .5rem solid #fff;
-	background-color: blue;
 }
 
 h3 {
@@ -163,6 +160,44 @@ h3 {
 	padding-top: 1rem;
 	margin-right: -3.3rem;
 	margin-bottom: 2rem;
+}
+
+.cityDazePost {
+	background-color:orange;
+	margin: 2rem;
+	padding: 1rem;
+	color: white;
+	font-size: 1.3rem;
+	line-height: 1.8rem;
+}
+
+.cityDazePost h3 {
+	font-family: "Contrail One", arial;
+	line-height: 2.5rem;
+	color:purple;
+	text-align: center;
+
+}
+
+.cityDazePost p {
+	color:white;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
+.cityDazePost a {
+	color:purple;
+	margin-left: .5rem;
+	margin-right: .5rem;
+}
+
+.cityDazePost strong, em {
+	margin-right: .5rem;
+	margin-left: .5rem;
+}
+
+iframe {
+	max-width: 100% !important;
 }
 
 @media only screen and (min-width: 40.063rem) {
@@ -247,4 +282,4 @@ h3 {
 	.row.full-height {
 		height: 4rem !important;
 	}
-}
+}=
