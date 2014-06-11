@@ -1,6 +1,8 @@
 trimbl
 ======
 
+Note: this is an edit for the ENG331 instruction assignment
+
 A Triangle music blog aggregator
 
 To run locally:
