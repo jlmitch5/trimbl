@@ -1,6 +1,6 @@
 trimbl
 ======
-
+Kyle Burns' edit for John's ENG331 instruction assignment
 A Triangle music blog aggregator
 
 To run locally:
