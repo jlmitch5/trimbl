@@ -1,7 +1,7 @@
 trimbl
 ======
 
-A Triangle music blog aggregator
+I'm so tired and I want to sleep
 
 To run locally:
 
