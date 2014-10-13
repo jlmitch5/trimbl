@@ -2,192 +2,123 @@
 var router = require('express').Router();
 var http = require('http');
 var https = require('https');
-var combinedObjectsFromBlogs = "";
-var postHasBeenAdded = 0;
 
-// theBottomString test URL
-var options = {
-    hostname: 'www.googleapis.com',
-    path: '/blogger/v3/blogs/6798191055822974877/posts?maxResults=8&key=AIzaSyCGZsGPtx_ePwT1Tyiqv47P5bfQggVeLH4',
-    method: 'GET'
-};
+var blogger_options = [
+    {
+        hostname: 'www.googleapis.com',
+        path: '/blogger/v3/blogs/6798191055822974877/posts?maxResults=10&key=AIzaSyCGZsGPtx_ePwT1Tyiqv47P5bfQggVeLH4',
+        method: 'GET'
+    },
+    {
+        hostname: 'www.googleapis.com',
+        path: '/blogger/v3/blogs/2795121378275054408/posts?maxResults=10&key=AIzaSyCGZsGPtx_ePwT1Tyiqv47P5bfQggVeLH4',
+        method: 'GET'
+    }
+];
 
-// tiangleBeat test URL
-var options2 = {
-    hostname: 'www.googleapis.com',
-    path: '/blogger/v3/blogs/2795121378275054408/posts?maxResults=2&key=AIzaSyCGZsGPtx_ePwT1Tyiqv47P5bfQggVeLH4',
-    method: 'GET'
-};
-
-// tiangleBeat test URL
-var options3 = {
-    hostname: 'citydazemusic.com',
-    path: '/api/get_recent_posts/',
-    method: 'GET'
-};
+var wordpress_options = [
+    {
+        hostname: 'citydazemusic.com',
+        path: '/api/get_recent_posts/',
+        method: 'GET'
+    }
+]
 
 //you can use something like this: .../api/posts?searchQuery=goodBand+dateSelection=lastWeek
 router.get('/posts', function(req, res){
-    var searchQuery = req.query.searchQuery;
-    var dateSelection = req.query.dateSelection;
-    var responseQuery = 'TODO: get posts with'
+    var done = 0;
+    var posts = [];
 
-    //TODO: this is a search: return posts that match search
-    if(searchQuery) {
-        responseQuery += ' searchQuery: ' + searchQuery;
-        res.json({response: responseQuery});
-    }
+    function callBlogger(blog_url, name) {
+        req = https.request(blog_url, function(resFromBlog) {
+            var jsonFromBlog = '';
 
-    //TODO: this is default: return posts < than a week old
-    if(dateSelection) {
-        responseQuery += ' dateSelection: ' + dateSelection;
-        res.json({response: responseQuery});
-    }
-
-    //this is a test.  testing url has no params
-    if(!dateSelection && !searchQuery) {
-
-        //test: get posts from bottomString
-        req = https.request(options, function(resBottomString) {
-            var jsonFromBottomString = '';
-
-            resBottomString.on('data', function(chunk) {
-                jsonFromBottomString += chunk;
+            resFromBlog.on('data', function(chunk) {
+                jsonFromBlog += chunk;
             });
 
-            resBottomString.on('end', function() {
+            resFromBlog.on('end', function() {
                 //test: send as JSON
-                objectFromBottomString = JSON.parse(jsonFromBottomString, function(k,v) {
+                objectFromBlog = JSON.parse(jsonFromBlog, function(k,v) {
                     //make the json prettier!
-                    if (k === "displayName" || k === "author" || k === "labels" || k === "selfLink" || k === "published" || k === "kind" || k === "nextPageToken" || k === "id" || k === "replies") {
+                    if (k === "displayName" || k === "author" || k === "labels" || k === "selfLink" || k === "published" || k === "kind" || k === "nextPageToken" || k === "id" || k === "replies" || k === "content" || k === "etag") {
                         //delete this type
                     } else if (k === "blog") {
-                        v = "theBottomString";
+                        v = name;
                         return v;
                     } else if (k === "updated") {
+                        v = v.slice(0, -6);
                         //change key name from updated to date
                         this.date = v;
                     } else {
                         return v;
                     }
                 });
-                var bottomStringObjects = JSON.stringify(objectFromBottomString);
-                if(postHasBeenAdded == 0) {
-                    combinedObjectsFromBlogs += bottomStringObjects.substring(0,(bottomStringObjects.length-2));
-                    postHasBeenAdded++;
-                } else if (postHasBeenAdded == 1) {
-                    combinedObjectsFromBlogs += ",";
-                    combinedObjectsFromBlogs += bottomStringObjects.substring(10,(bottomStringObjects.length-2));
-                    postHasBeenAdded++;
-                } else if (postHasBeenAdded == 2) {
-                    combinedObjectsFromBlogs += ",";
-                    combinedObjectsFromBlogs += bottomStringObjects.substring(10);
-                    res.send(JSON.parse(combinedObjectsFromBlogs));
-                    combinedObjectsFromBlogs = "";
-                    postHasBeenAdded = 0;
-                }
-            });
-        });
-
-        req.end();
-
-        //test: get posts from bottomString
-        req = https.request(options2, function(resTriangleBeat) {
-            var jsonFromTriangleBeat = '';
-
-            resTriangleBeat.on('data', function(chunk) {
-                jsonFromTriangleBeat += chunk;
-            });
-
-            resTriangleBeat.on('end', function() {
-                //test: send as JSON
-                objectFromTriangleBeat = JSON.parse(jsonFromTriangleBeat, function(k,v) {
-                    //make the json prettier!
-                    if (k === "displayName" || k === "author" || k === "labels" || k === "selfLink" || k === "published" || k === "kind" || k === "nextPageToken" || k === "id" || k === "replies") {
-                        //delete this type
-                    } else if (k === "blog") {
-                        v = "triangleBeat";
-                        return v;
-                    } else if (k === "updated") {
-                        //change key name from updated to date
-                        this.date = v;
-                    } else {
-                        return v;
-                    }
+                objectFromBlog.items.forEach(function (element, index, array) {
+                    posts.push(element);
                 });
-                var triangleBeatObjects = JSON.stringify(objectFromTriangleBeat);
-                if(postHasBeenAdded == 0) {
-                    combinedObjectsFromBlogs += triangleBeatObjects.substring(0,(triangleBeatObjects.length-2));
-                    postHasBeenAdded++;
-                } else if (postHasBeenAdded == 1) {
-                    combinedObjectsFromBlogs += ",";
-                    combinedObjectsFromBlogs += triangleBeatObjects.substring(10,(triangleBeatObjects.length-2));
-                    postHasBeenAdded++;
-                } else if (postHasBeenAdded == 2) {
-                    combinedObjectsFromBlogs += ",";
-                    combinedObjectsFromBlogs += triangleBeatObjects.substring(10);
-                    res.send(JSON.parse(combinedObjectsFromBlogs));
-                    combinedObjectsFromBlogs = "";
-                    postHasBeenAdded = 0;
+                done++;
+                if (done == 3) {
+                    res.send(JSON.stringify(posts.sort(function (a,b) {
+                        a = new Date(a.date);
+                        b = new Date(b.date);
+                        return a>b ? -1 : a<b ? 1 : 0;
+                    })))
                 }
             });
-        });
+        })
 
         req.end();
+    }
 
-        //test: get posts from bottomString
-        req = http.request(options3, function(resCityDaze) {
-            var jsonFromCityDaze = '';
+    function callWordpress(blog_url, name) {
+        req = http.request(blog_url, function(resFromBlog) {
+            var jsonFromBlog = '';
 
-            resCityDaze.on('data', function(chunk) {
-                jsonFromCityDaze += chunk;
+            resFromBlog.on('data', function(chunk) {
+                jsonFromBlog += chunk;
             });
 
-            resCityDaze.on('end', function() {
-                var authorName = "";
-                objectFromCityDaze= JSON.parse(jsonFromCityDaze, function(k,v) {
+            resFromBlog.on('end', function() {
+                //test: send as JSON
+                objectFromBlog = JSON.parse(jsonFromBlog, function(k,v) {
                     //make the json prettier!
-                    if (k === "thumbnail" || k === "thumbnail_size" || k === "thumbnail_images" ||k === "comment_status" || k === "custom_fields" || k === "comments" || k === "attachments" || k === "comment_count" || k === "modified" || k === "categories" || k === "tags" || k === "author" || k === "pages" || k === "title_plain" || k === "excerpt" || k === "slug" || k === "id" || k === "status" || k === "count" || k === "count_total") {
+                    if (k === "thumbnail" || k === "thumbnail_size" || k === "thumbnail_images" ||k === "comment_status" || k === "custom_fields" || k === "comments" || k === "attachments" || k === "comment_count" || k === "modified" || k === "categories" || k === "tags" || k === "author" || k === "pages" || k === "title_plain" || k === "excerpt" || k === "slug" || k === "id" || k === "status" || k === "count" || k === "count_total" || k === "content") {
                         //delete this type
                     } else if (k === "type") {
-                        //change key name from type to blog
+                        v = name;
                         this.blog = v;
                     } else if (k === "posts") {
                         //change key name from type to blog
                         this.items = v;
+                    } else if (k === "date") {
+                        v = v.replace(" ", "T")
+                        return v;
                     } else {
                         return v;
                     }
                 });
-
-                objectFromCityDaze = JSON.parse(JSON.stringify(objectFromCityDaze), function(k,v) {
-                    if (k === "blog") {
-                        v = "cityDaze";
-                        return v;
-                    } else {
-                        return v;
-                    }
-                })
-                var cityDazeObjects = JSON.stringify(objectFromCityDaze);
-                if(postHasBeenAdded == 0) {
-                    combinedObjectsFromBlogs += cityDazeObjects.substring(0,(cityDazeObjects.length-2));
-                    postHasBeenAdded++;
-                } else if (postHasBeenAdded == 1) {
-                    combinedObjectsFromBlogs += ",";
-                    combinedObjectsFromBlogs += cityDazeObjects.substring(10,(cityDazeObjects.length-2));
-                    postHasBeenAdded++;
-                } else if (postHasBeenAdded == 2) {
-                    combinedObjectsFromBlogs += ",";
-                    combinedObjectsFromBlogs += cityDazeObjects.substring(10);
-                    res.send(JSON.parse(combinedObjectsFromBlogs));
-                    combinedObjectsFromBlogs = "";
-                    postHasBeenAdded = 0;
+                objectFromBlog.items.forEach(function (element, index, array) {
+                    posts.push(element);
+                });
+                done++;
+                if (done == 3) {
+                    res.send(JSON.stringify(posts.sort(function (a,b) {
+                        a = new Date(a.date);
+                        b = new Date(b.date);
+                        return a>b ? -1 : a<b ? 1 : 0;
+                    })))
                 }
             });
-        });
+        })
 
         req.end();
     }
+
+    callBlogger(blogger_options[0], "The Bottom String");
+    callBlogger(blogger_options[1], "Triangle Beat");
+    callWordpress(wordpress_options[0], "CityDaze");
+
 });
 
 module.exports = router;
