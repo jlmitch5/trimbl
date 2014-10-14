@@ -188,7 +188,9 @@ block content
           img(src='/images/bandTogether.jpg')
     .large-9.medium-12.small-12.columns.postsBox.bigDisplay.mediumDisplay.smallDisplay
       div(ng-controller="MyController")
-        div(ng-repeat="post in posts" class="{{post.blog}}")
+        div(ng-repeat="post in posts" class="{{post.blog}}" style="width: 20%; float: left; margin: 20px; padding: 10px; background-color: white; height: 120px;")
+          .postDate
+            {{post.date}}
           .postTitle
             a(href="{{post.url}}") {{post.title}}
           .postBlog
