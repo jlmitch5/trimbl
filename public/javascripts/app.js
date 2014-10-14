@@ -5,7 +5,7 @@ expressFoundationNG.controller('accordionController', function ($scope) {
 });
 
 expressFoundationNG.controller("MyController", function ($scope, $http) {
-	$http.get('http://evening-headland-8819.heroku.com/api/posts').
+	$http.get('http://evening-headland-8819.herokuapp.com/api/posts').
 	success(function(data, status, headers, config) {
 		$scope.posts = data;
 	}).
