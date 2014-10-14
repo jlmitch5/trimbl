@@ -59,11 +59,12 @@ router.get('/posts', function(req, res){
                 });
                 done++;
                 if (done == 3) {
-                    res.send(JSON.stringify(posts.sort(function (a,b) {
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify(posts.sort(function (a,b) {
                         a = new Date(a.date);
                         b = new Date(b.date);
                         return a>b ? -1 : a<b ? 1 : 0;
-                    })))
+                    })));
                 }
             });
         })
@@ -103,11 +104,13 @@ router.get('/posts', function(req, res){
                 });
                 done++;
                 if (done == 3) {
-                    res.send(JSON.stringify(posts.sort(function (a,b) {
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify(posts.sort(function (a,b) {
                         a = new Date(a.date);
                         b = new Date(b.date);
                         return a>b ? -1 : a<b ? 1 : 0;
-                    })))
+                    })));
+                    
                 }
             });
         })
