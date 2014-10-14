@@ -5,7 +5,7 @@ expressFoundationNG.controller('accordionController', function ($scope) {
 });
 
 expressFoundationNG.controller("MyController", function ($sce, $scope, $http) {
-    $http.get('http://localhost:3000/api/posts').
+    $http.get('http://trimbl.co/api/posts').
 	    success(function(data) {
 	      $scope.posts = data;
 	      console.log($scope.posts);
