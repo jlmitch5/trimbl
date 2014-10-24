@@ -2,16 +2,17 @@
 var router = require('express').Router();
 var http = require('http');
 var https = require('https');
+var key = require('../config.js');
 
 var blogger_options = [
     {
         hostname: 'www.googleapis.com',
-        path: '/blogger/v3/blogs/6798191055822974877/posts?maxResults=10&key=AIzaSyCGZsGPtx_ePwT1Tyiqv47P5bfQggVeLH4',
+        path: '/blogger/v3/blogs/6798191055822974877/posts?maxResults=10&key=' + key.getApiKey(),
         method: 'GET'
     },
     {
         hostname: 'www.googleapis.com',
-        path: '/blogger/v3/blogs/2795121378275054408/posts?maxResults=10&key=AIzaSyCGZsGPtx_ePwT1Tyiqv47P5bfQggVeLH4',
+        path: '/blogger/v3/blogs/2795121378275054408/posts?maxResults=10&key=' + key.getApiKey(),
         method: 'GET'
     }
 ];
